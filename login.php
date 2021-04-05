@@ -14,5 +14,6 @@ require_once ('layout/header.php'); ?>
         <input class = 'btn btn-primary col-sm-offset-2' type="submit" value="LOGIN"/>
     </div>
 </form>
-
-<?php require_once ("layout/footer.php")?>
+    
+<?php 
+require_once ("layout/footer.php")?>

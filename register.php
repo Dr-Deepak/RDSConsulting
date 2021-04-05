@@ -13,6 +13,7 @@ $address = $_POST['address'];
 $phone = $_POST['phoneNumber'];
 $sin = $_POST['sinNumber'];
 $position = $_POST['position'];
+$priv = $POST['priv'];
 
 // created a flag to check if form is fill appropriately
 $ok = true;
@@ -23,23 +24,23 @@ $ok = true;
   * Just checked if fields are nor numeric neither empty
   * if any condition is true it will raise the flag
   */
-if (is_numeric($fName) || empty($fName)) {
+// if (is_numeric($fName) || empty($fName)) {
 
-    $ok = false;
-    echo 'First name cannot be empty or a number';
+//     $ok = false;
+//     echo 'First name cannot be empty or a number';
 
-} else if (is_numeric($lName) || empty($lName)) {
-    $ok = false;
-    echo 'Last name cannot be empty or a number';
-} else if (empty($username)) {
-    $ok = false;
-    echo 'User name cannot be left empty';
-} else if (empty($password)) {
-    $ok = false;
-    echo 'Password cannot be left empty';
-} else if (empty($address)) {
-    $ok = false;
-    echo 'Street cannot be left empty';
+// } else if (is_numeric($lName) || empty($lName)) {
+//     $ok = false;
+//     echo 'Last name cannot be empty or a number';
+// } else if (empty($username)) {
+//     $ok = false;
+//     echo 'User name cannot be left empty';
+// } else if (empty($password)) {
+//     $ok = false;
+//     echo 'Password cannot be left empty';
+// } else if (empty($address)) {
+//     $ok = false;
+//     echo 'Street cannot be left empty';
 
 // } else if (empty($city)) {
 //     $ok = false;
@@ -47,13 +48,13 @@ if (is_numeric($fName) || empty($fName)) {
 // } else if (empty($province)) {
 //     $ok = false;
 //     echo 'province cannot be left empty';
-} else if (empty($phone)) {
-    $ok = false;
-    echo 'Phone Number cannot be non-numeric or left empty';
-} else if (empty($sin)) {
-    $ok = false;
-    echo 'SIN/SSN cannot be left empty or non-numeric';
-}
+// } else if (empty($phone)) {
+//     $ok = false;
+//     echo 'Phone Number cannot be non-numeric or left empty';
+// } else if (empty($sin)) {
+//     $ok = false;
+//     echo 'SIN/SSN cannot be left empty or non-numeric';
+// }
 if ($ok) {
     try {
         //Connecting to the database
@@ -61,7 +62,7 @@ if ($ok) {
 
         //Setup an sql command to save the new game
         // if ($position == 'Admin') {
-        //     $sql = 'SELECT * FROM phpapplicants WHERE positions = "Admin"';
+        //     $sql = 'SELECT * FROM users WHERE positions = "Admin"';
         //     $cmd = $conn->prepare($sql);
         //     $cmd->execute();
         //     $count = $cmd->rowCount();
@@ -73,30 +74,30 @@ if ($ok) {
         // }
         session_start();
         if (!empty($_SESSION['ID'])) {
-            $sql = 'UPDATE phpapplicants
-                        SET fiurstname = :firstname, lastname = :lastname, username = :uname,
-                         password = :pass, address = :address, city = :city, province = :province,
-                          phone = :phone, sin = :sin, positions = :position WHERE applicantID = "' . $_SESSION['ID'] . '"';
+            $sql = 'UPDATE users
+                        SET firstname = :firstname, lastname = :lastname, password = :pass, address = :address, city = :city, province = :province,
+                          phone = :phone, priv = :position WHERE uname = "' . $_SESSION['uname'] . '"';
         } else {
-            // $sql = 'INSERT INTO phpapplicants (firstname, lastname, username, password, address, city, province, phone, sin, positions)
-            //                 VALUES (:firstname, :lastname,:uname,:pass, :address, :city, :province, :phone, :sin, :position)';
+            // $sql = 'INSERT INTO users (fname, lname, uname, pwd, str, city, state, phone,  priv)
+            //                 VALUES (:firstname, :lastname,:uname,:pass, :address, :city, :province, :phone, :position)';
 
-            $sql = 'INSERT INTO users (fName, lName, username, password, sin)
-            VALUES (:firstname, :lastname, :uname,:pass, :sin)';
+            $sql = 'INSERT INTO users ( uname, pwd, priv)
+            VALUES (:uname,:pass,:priv)';
         }
         //setup a cmd object
         $cmd = $conn->prepare($sql);
 
         //Fill the placeholder to avoid SQL INJECTION
-        $cmd->bindParam(':firstname', $fName, PDO::PARAM_STR, 50);
-        $cmd->bindParam(':lastname', $lName, PDO::PARAM_STR, 50);
+        // $cmd->bindParam(':firstname', $fName, PDO::PARAM_STR, 50);
+        // $cmd->bindParam(':lastname', $lName, PDO::PARAM_STR, 50);
         $cmd->bindParam(':uname', $username, PDO::PARAM_STR, 30);
         $cmd->bindParam(':pass', $password, PDO::PARAM_STR, 128);
+        // $cmd->bindParam(':priv', $priv, PDO::PARAM_STR, 30);
         // $cmd->bindParam(':address', $address, PDO::PARAM_STR);
         // $cmd->bindParam(':city', $city, PDO::PARAM_STR);
         // $cmd->bindParam(':province', $province, PDO::PARAM_STR);
         // $cmd->bindParam(':phone', $phone, PDO::PARAM_STR, 12);
-        $cmd->bindParam(':sin', $sin, PDO::PARAM_STR, 11);
+        // $cmd->bindParam(':sin', $sin, PDO::PARAM_STR, 11);
         // $cmd->bindParam(':position', $position, PDO::PARAM_STR, 50);
 
         // execute SQL Query
@@ -109,7 +110,7 @@ if ($ok) {
         // mail('error@rdsconsulting.ca','Register page error',$ex);
         echo $ex;
         // redirect user to error page
-        //  header('location:error/error.php');
+         header('location:error/error.php');
     }
 }
 /*send notification email for successfully registering with company7*/

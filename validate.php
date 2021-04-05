@@ -7,7 +7,7 @@ try {
 
     require_once ('dao/db.php');
 
-    $sql = "SELECT * FROM users where username = :uname AND password = :pass";
+    $sql = "SELECT * FROM users where uname = :uname AND pwd = :pass";
 
     $cmd = $conn->prepare($sql);
     $cmd->bindParam(':uname', $username, PDO::PARAM_STR, 30);
@@ -18,16 +18,17 @@ try {
     $recCount = $cmd->rowCount();
 
     if($recCount == 0){
-        echo "Invalid Username or password";
+        header('location:login.php');
+        
         //$result = "Invalid Username or password";
     }
     else {
         session_start();
         foreach($users as $user ){
-            $_SESSION['applicantID'] = $user['applicantID'];
-            $_SESSION['firstname']   = $user['firstname'];
-            $_SESSION['lastname']    = $user['lastname'];
-            $_SESSION['position']    = $user['positions'];
+            $_SESSION['uname'] = $user['uname'];
+            $_SESSION['firstname']   = $user['fname'];
+            $_SESSION['lastname']    = $user['lname'];
+            $_SESSION['position']    = $user['priv'];
         }
         $conn = null;
         header('location:welcome.php');
@@ -36,7 +37,7 @@ try {
 
 }catch(Exception $db){
 
-    console.log($db);
+    console.log($db );
   //  mail("errors@rdsconsulting.ca","Database connection error",$db);
   //  header('location:error/error.php');
 }

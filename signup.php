@@ -45,15 +45,15 @@ require_once('layout/header.php');
     <form action="register.php" method="post">
         <fieldset>
             <label for="firstName" class="col-sm-2"> First Name : </label>
-            <input name="firstName" id="firstName" placeholder="Enter First Name here" required type="text" value= "<?php echo $fName; ?>"/>
+            <input name="firstName" id="firstName" placeholder="Enter First Name here"  type="text" value= "<?php echo $fName; ?>"/>
         </fieldset>
         <fieldset>
             <label for="lastName" class="col-sm-2"> Last Name : </label>
-            <input name="lastName" id="lastName" placeholder="Enter Last Name here" required type="text" value="<?php echo $lName; ?>"/>
+            <input name="lastName" id="lastName" placeholder="Enter Last Name here"  type="text" value="<?php echo $lName; ?>"/>
         </fieldset>
         <fieldset>
-            <label for="address" class="col-sm-2"> Street Address : </label>
-            <input  id="autocomplete" placeholder="Enter full address here" required type="text" onFocus="geolocate()" autocomplete="off"/>
+            <label for="current-address" class="col-sm-2"> Street Address : </label>
+            <input  id="autocomplete" placeholder="Enter full address here"  type="text" onFocus="geolocate()" autocomplete="off"/>
 
             <input name="address" id="street_number" hidden/>
             <input name="city" id="locality" hidden/>
@@ -63,22 +63,22 @@ require_once('layout/header.php');
         </fieldset>
         <fieldset>
             <label for="phoneNumber" class="col-sm-2">Phone : </label>
-            <input name="phoneNumber" id="phoneNumber" placeholder="555-555-5555" required type="text"
+            <input name="phoneNumber" id="phoneNumber" placeholder="123-123-1234"  type="text"
                    value= "<?php echo $phone; ?>"/>
         </fieldset>
         <fieldset>
-            <label for="sinNumber" class="col-sm-2">SIN/SSN<e>*</e> : </label>
-            <input name="sinNumber" id="sinNumber" placeholder="123-123-123" type="text"
-                   value= "<?php echo $sin; ?>" required />
-        </fieldset>
-        <fieldset>
-            <label for="uName" class="col-sm-2">Username : </label>
-            <input name="uName" id="uName" required type="text" value= "<?php echo $uname; ?>"/>
+            <label for="uName" class="col-sm-2">Email : </label>
+            <input name="uName" id="uName" required type="email" value= "<?php echo $uname; ?>"/>
         </fieldset>
         <fieldset>
             <label for="pass" class="col-sm-2">Password : </label>
             <input name="pass" id="pass" required type="password"/>
         </fieldset>
+        <fieldset>
+            <label for="priv" class="col-sm-2">Priv : </label>
+            <input name="priv" id="priv" required />
+        </fieldset>
+      
         <!-- I need Help to figure this part out
        <fieldset>
            <label>Select days available to work</label></br>
@@ -93,11 +93,9 @@ require_once('layout/header.php');
        -->
         <input class='btn btn-primary col-sm-offset-2' type="submit"/>
     </form>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUVePJwIL3rqcxoT0T8VX06yJP0b59fCo&libraries=places&callback=initAutocomplete" async defer></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUVePJwIL3rqcxoT0T8VX06yJP0b59fCo&libraries=places&callback=initMap">
+</script>
 <?php
 require_once("layout/footer.php");
 ?>
