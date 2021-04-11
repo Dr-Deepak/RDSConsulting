@@ -9,13 +9,14 @@
     $lName     = $_POST['lastName'];
     $username  = $_POST['uName'];
     $password  = hash('sha512', $_POST['pass']);
-    $address   = $_POST['address'];
+    $address   = $_POST['str'];
     $city      = $_POST['city'];
     $province  = $_POST['province'];
+    $country   =$_POST['country'];
     $phone     = $_POST['phoneNumber'];
-    $sin       = $_POST['sinNumber'];
+   
     $position  = $_POST['position'];
-    $priv      = $_POST['priv'];
+ 
 
     // created a flag to check if form is fill appropriately
     $ok = true;
@@ -69,13 +70,13 @@
                 if($_SESSION['priv']='admin')
                 {
                     $sql = 'UPDATE users
-                            SET fname = :firstname, lname = :lastname, pwd = :pass, str = :address, city = :city, state = :province,
-                            ph = :phone, priv = :position WHERE id = "'.$id.'"';
+                            SET fname = :firstname, lname = :lastname, uname =:uname, pwd = :pass, str = :address, city = :city, state = :province,
+                            ph = :phone, priv = :position, country=:country WHERE id = "'.$id.'"';
                 }  
                 else 
                 {
                     $sql = 'UPDATE users
-                            SET fname = :firstname, lname = :lastname, pwd = :pass, str = :address, city = :city, state = :province,
+                            SET fname = :firstname, lname = :lastname, uname=:uname, pwd = :pass, str = :address, city = :city, state = :province,
                             ph = :phone WHERE id = "'.$id.'"';
                 } 
             } 
@@ -96,30 +97,32 @@
             //setup a cmd object
             $cmd = $conn->prepare($sql);
 
-            Fill the placeholder to avoid SQL INJECTION
+            // Fill the placeholder to avoid SQL INJECTION
             $cmd->bindParam(':firstname', $fName, PDO::PARAM_STR, 50);
             $cmd->bindParam(':lastname', $lName, PDO::PARAM_STR, 50);
-            $cmd->bindParam(':uname', $username, PDO::PARAM_STR, 30);
+            $cmd->bindParam(':uname', $username, PDO::PARAM_STR, 100);
             $cmd->bindParam(':pass', $password, PDO::PARAM_STR, 128);
 
             $cmd->bindParam(':address', $address, PDO::PARAM_STR);
             $cmd->bindParam(':city', $city, PDO::PARAM_STR);
             $cmd->bindParam(':province', $province, PDO::PARAM_STR);
             $cmd->bindParam(':phone', $phone, PDO::PARAM_STR, 12);
-            // $cmd->bindParam(':sin', $sin, PDO::PARAM_STR, 11);
+            $cmd->bindParam(':country', $country, PDO::PARAM_STR, 50);
             $cmd->bindParam(':position', $position, PDO::PARAM_STR, 50);
 
             // execute SQL Query
             $cmd->execute();
             //disconnecting from database
             $conn=null;
-            header('location:login.php');
+
+            header('location:welcome.php');
         } catch (Exception $ex) {
             // send a mail to developer
             // mail('error@rdsconsulting.ca','Register page error',$ex);
-            echo $ex;
+            echo "EXCEPTION: ".$ex." SQL: ".$sql ;
+                $_SESSION['err'] =$ex;
             // redirect user to error page
-            header('location:error/error.php');
+            header('location:error.php');
         }
     }
     /*send notification email for successfully registering with company7*/

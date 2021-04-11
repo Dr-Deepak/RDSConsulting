@@ -33,6 +33,7 @@
             $pro     = $user['state'];
             $phone   = $user['ph'];
             $country = $user['country'];
+            $priv    = $user['priv'];
             $hidden  = null;
             $uname   = $user['uname'];
             
@@ -101,11 +102,10 @@
                 <?php
                     if(!empty($_SESSION['position'])) {
                         if(strcmp($_SESSION['position'],'admin')==0){
-                            echo '
-                            
+                            echo '                            
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text rounded col-sm-2" id="priv">Position </span>
-                                    <input  class="pl-3 rounded col-sm-6" name="priv" id="priv" required />
+                                    <span class="input-group-text rounded col-sm-2" id="position">Position </span>
+                                    <input  class="pl-3 rounded col-sm-6" name="position" id="position" value = "'.$priv.'" required />
                                 </div>
                             ';
                         }
