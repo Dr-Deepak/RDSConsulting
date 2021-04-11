@@ -8,7 +8,7 @@ if(getHostName()=='newdell'){
 }
 try {
 
-    $conn = new PDO('mysql:host='.$hosts.':3306;dbname=cms', 'shrd2669', 'deepak86');
+    $conn = new PDO('mysql:host='.$hosts.':3306;dbname=cms', 'shrd2669', '$Shrd2669');
     // $conn = new PDO('mysql:host=192.168.2.31:3306;dbname=cms', 'shrd2669', 'deepak86');
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 }catch(exception $db){

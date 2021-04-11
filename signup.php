@@ -3,107 +3,116 @@
    $page_title = 'RDS Consulting Inc. |  Sign Up ' . '<i class="icon-user icon-3"></i>';
    if (empty($_GET['id']))
     {
-        
+        $id      = "";
         $fName   = "";
         $lName   = "";
         $add     = null;
         $city    = null;
-        $pro    = null;
+        $pro     = null;
         $postal  = "";
         $country = "";
         $phone   = "";
-        $hidden ="hidden";
+        $hidden  = "hidden";
         $uname   = "";
     }
     else
     {
         require('dao/db.php');
-        $sql = "SELECT * FROM users where id =".$_GET['id'];
+        $id=$_GET['id'];
+        $sql = "SELECT * FROM users where id = $id";
         $cmd = $conn->prepare($sql);
         $cmd->execute();
+
         $users = $cmd->fetchAll();
         foreach ($users as $user) 
         {
-            $fName = $user['fname'];
-            $lName = $user['lname'];
-            $add   = $user['str'];
-            $city  = $user['city'];
-            $pro  = $user['state'];
-            $phone = $user['ph'];
-            $country=$user['country'];
-            $hidden =null;
-            $uname = $user['uname'];
-            $conn=null;
+            $fName   = $user['fname'];
+            $lName   = $user['lname'];
+            $add     = $user['str'];
+            $city    = $user['city'];
+            $pro     = $user['state'];
+            $phone   = $user['ph'];
+            $country = $user['country'];
+            $hidden  = null;
+            $uname   = $user['uname'];
+            
         }
+        $conn=null;
     }
     require_once('layout/header.php');
 ?>
 <!-- <script src="js/auto-complete.js"></script> -->
-    <h1>Personal Information </h1>    
-    <form action="register.php" method="post">
+    <h1>Let's Sign up ! </h1>    
+    <form class ="justify-content-center" action="register.php" method="post">
+        <input name='id' hidden  Value=<?php echo $id?> />
         <fieldset>
-            <label for="firstName" class="col-md-2"> First Name : </label>
-            <input name="firstName" id="firstName" placeholder="Enter First Name here"  type="text" value= "<?php echo $fName; ?>"/>
-        </fieldset>
-        <fieldset>
-            <label for="lastName" class="col-md-2"> Last Name : </label>
-            <input name="lastName" id="lastName" placeholder="Enter Last Name here"  type="text" value="<?php echo $lName; ?>"/>
-        </fieldset>
-        
-        
-            
-            <?php 
-            if($hidden){         
-                echo '
-                <fieldset>        
-                    <label for="current-address" class="col-md-2"> Street Address : </label>
-                    <input  id="autocomplete" placeholder="Enter full address here"  type="text" onFocus="geolocate()" autocomplete="off"/>
-                </fieldset>';
-            }
-            else{
-            echo '            
-                <fieldset>
-                    <label for="str" class="col-md-2" $hidden>Street Address : </label>
-                    <input name="str" id="street_number" placeholder="# & Street Name" Value ="'.$add.'" '.$hidden.'/>
-                </fieldset>
-                <fieldset> 
-                    <label for="city" class="col-md-2" $hidden>City : </label>
-                    <input name="city" id="locality" placeholder="City" Value ="'.$city.'" '.$hidden.'/>
-                </fieldset>
-                <fieldset>
-                    <label for="province" class="col-md-2" $hidden>State/Province : </label>
-                    <input name="province" id="administrative_area_level_1" placeholder="State/Province" Value ="'.$pro.'" '.$hidden.'/>
-                </fieldset>                
-                <fieldset>
-                    <label for="country" class="col-md-2" $hidden>Country : </label>
-                    <input name="country" id="country" placeholder="Country" Value ="'.$country.'" '.$hidden.'/>
-                </fieldset>';
-            } ?>
-        <fieldset>
-            <label for="phoneNumber" class="col-md-2">Phone : </label>
-            <input name="phoneNumber" id="phoneNumber" placeholder="123-123-1234"  type="text"
+        <legend>Personal Information</legend>
+            <div class="input-group-prepend">
+                <span class="input-group-text rounded col-sm-2" id="name">First & Last Name</span>          
+                <input class="pl-3 rounded-top-bottom col-sm-3" name="firstName" id="firstName" placeholder="Enter First Name here"  type="text" required value= "<?php echo $fName; ?>"/>
+                <input class="pl-3 rounded-top-bottom col-sm-3" name="lastName" id="lastName" placeholder="Enter Last Name here"  type="text" required  value="<?php echo $lName; ?>"/>
+            </div>
+            <div class="input-group-prepend">                      
+                <?php 
+                    if($hidden){         
+                    echo '
+                        <span class="input-group-text rounded col-sm-2 " id="name">Address</span>   
+                        <input class=" pl-3 rounded col-sm-6" id="autocomplete" placeholder="Enter full address here"  type="text" onFocus="geolocate()" autocomplete="off"/>
+                        </div>
+                        ';
+                    }
+                    else{
+                    echo '            
+                                <span class="input-group-text rounded col-sm-2 " id="street_number">Street Address</span> 
+                                <input  class="col-sm-6 pl-3 rounded" name="str" id="street_number" placeholder="# & Street Name" Value ="'.$add.'" '.$hidden.'/>
+                            </div>
+                            <div class="input-group-prepend">      
+                                <span class="input-group-text rounded col-sm-2 " id="locality">City</span>
+                                <input  class="pl-3 rounded col-sm-6"  name="city" id="locality" placeholder="City" Value ="'.$city.'" '.$hidden.'/>
+                            </div>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text rounded col-sm-2" id="administrative_area_level_1">State/Province</span>
+                                <input  class="pl-3 rounded col-sm-6" name="province" id="administrative_area_level_1" placeholder="State/Province" Value ="'.$pro.'" '.$hidden.'/>
+                            </div>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text rounded col-sm-2" id="country">Country</span>
+                                <input  class="col-sm-6 pl-3 rounded" name="country" id="country" placeholder="Country" Value ="'.$country.'" '.$hidden.'/>
+                            </div>
+                        ';
+                    } 
+                ?>
+            </div>
+            <div class="input-group-prepend">   
+                <span class="input-group-text rounded col-sm-2 form-group" id="phoneNumber">Phone</span>
+                <input  class="pl-3 rounded col-sm-6" name="phoneNumber" id="phoneNumber" placeholder="123-123-1234"  type="text" required 
                    value= "<?php echo $phone; ?>"/>
+            </div>
         </fieldset>
         <fieldset>
-            <label for="uName" class="col-md-2">Email : </label>
-            <input name="uName" id="uName" required type="email" value= "<?php echo $uname; ?>"/>
-        </fieldset>
-        <fieldset>
-            <label for="pass" class="col-sm-2">Password : </label>
-            <input name="pass" id="pass" required type="password"/>
-        </fieldset>
-        <?php
-            if(session_status()== PHP_SESSION_ACTIVE) {
-                if( $_SESSION['uname']=='admin'){
-                    echo '       
-                    <fieldset>
-                        <label for="priv" class="col-sm-2">Priv : </label>
-                        <input name="priv" id="priv" required />
-                    </fieldset>
-                    ';
-                }
-            }
-        ?>    
+        <legend>Account Information</legend>
+            <div class="input-group-prepend">  
+                <span class="input-group-text rounded col-sm-2 form-group" id="uName">Email</span>
+                <input  class="pl-3 rounded col-sm-6" name="uName" id="uName" required type="email" value= "<?php echo $uname; ?>"/>
+            </div>
+            <div class="input-group-prepend">
+                <span class="input-group-text rounded col-sm-2 form-group" id="pass">Password</span>
+                <input  class="pl-3 rounded col-sm-6 " name="pass" id="pass" required type="password"/>
+            </div>               
+                <?php
+                    if(!empty($_SESSION['position'])) {
+                        if(strcmp($_SESSION['position'],'admin')==0){
+                            echo '
+                            
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text rounded col-sm-2" id="priv">Position </span>
+                                    <input  class="pl-3 rounded col-sm-6" name="priv" id="priv" required />
+                                </div>
+                            ';
+                        }
+                    }
+                ?> 
+            </div>
+        </fieldset>   
         <!-- I need Help to figure this part out
        <fieldset>
            <label>Select days available to work</label></br>
@@ -116,7 +125,7 @@
            <label for="Sun" class = "col-sm-1">Sun</label><input name ="Sun" id="Sun" type="checkbox" value="Sun"/>
        </fieldset>
        -->
-        <input class='btn btn-primary col-sm-offset-2' type="submit"/>
+        <input class='btn btn-success col-sm-offset-2 float-right' type="submit"/>
     </form>
     <script async
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUVePJwIL3rqcxoT0T8VX06yJP0b59fCo&libraries=places&callback=initMap">
