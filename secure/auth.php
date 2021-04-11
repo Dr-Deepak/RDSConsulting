@@ -1,5 +1,7 @@
-<?php session_start();
-if(empty($_SESSION['uID'])){
+<?php 
+session_start();
+
+if(empty($_SESSION['uname'])){
    header('location:login.php');
     exit();
 }

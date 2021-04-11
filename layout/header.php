@@ -23,28 +23,30 @@
   <header>
     <nav class="navbar navbar-expand-md bg-dark navbar-dark">
       <div class="container-fluid">      
-        <a href="#page-hero" class="navbar-brand" title=" homepage">
+        <a href="welcome.php" class="navbar-brand" title=" homepage">
             <i class ="fas fa-briefcase"></i> <?php echo $page_title;?>
         </a>
 
         <div class="navbar-nav">
           <?php
-            if(session_status()== PHP_SESSION_ACTIVE){
+            if(session_status()!= PHP_SESSION_ACTIVE){
                 session_start();
-                console_log("SESSION ACTIVE");
             }
-            if(!empty($_SESSION['applicantID'])){
-                 if(strcmp($_SESSION['position'], 'Admin')==0){
-                    echo '<a class = "nav-item nav-link" href = "applicants.php" title = "View Applicants" > View Applicants </a>';
+            if(!empty($_SESSION['uname'])){
+                 if(strcmp($_SESSION['position'], 'admin')==0){
+                    echo '<a class = "nav-item nav-link text-uppercase" href = "users.php" title = users" >users </a>';
 
                   }
-                    echo' <a class = "nav-item nav-link" href = "logout.php" title = "LOGOUT" > Log Out</a >';
-                $_SESSION['noadmin']= "Notice you are not logged in as admin, so cannot view applicants page link";
+                  else{
+                    
+                  }
+                    echo' <a class = "nav-item nav-link text-uppercase" href = "logout.php" title = "LOGOUT" > Log Out</a >';
+                
             }
             else
             {
-                 echo '<a class = "nav-item nav-link" href = "login.php" title = " View games" > LOG IN </a>
-                       <a class = "nav-item nav-link" href = "signup.php" title = " Add a game" > SIGN UP </a> ';
+                 echo '<a class = "nav-item nav-link text-uppercase" href = "login.php" title = "LOG IN" > LOG IN </a>
+                       <a class = "nav-item nav-link text-uppercase" href = "signup.php" title = "SIGN UP" > SIGN UP </a> ';
             }
           ?>
         </div>

@@ -1,2 +1,2 @@
-ErrorDocument 404 localhost/RDSConsulting/error/404.php
-DirectoryIndex welcome.php
+ErrorDocument 404 error/404.php
+DirectoryIndex login.php

@@ -8,22 +8,21 @@ try {
     //Connecting to the database
     require_once('dao/db.php');
     //Setup an sql command to save the new game
-    $sql = 'SELECT * FROM phpapplicants';
+    $sql = 'SELECT * FROM users';
 
     //setup a cmd object
     $cmd = $conn->prepare($sql);
     $cmd->execute();
 
     //Pull data from database
-    $applicant = $cmd->fetchall();
+    $users = $cmd->fetchall();
     /**
      * Setup  table  and create its header with column headings
      */
     echo '<h1>Current Employees</h1>
                          <table class = "table table-striped">
                             <thead>
-                                <th>Name</th>
-                                <th>Position Applied</th>
+                                <th>Name</th>                              
                                 <th>Address</th>
                                 <th>City</th>
                                 <th>Province</th>
@@ -34,21 +33,21 @@ try {
                             <tbody>';
 
     //Loop through all records in database
-    foreach ($applicant as $applicants) {
+    foreach ($users as $user) {
         echo '<tr>
-                <td class = "col-sm-1">' . $applicants['firstname'] . '  ' . $applicants['lastname'] . '</td>
-                <td class = "col-sm-1">' . $applicants['positions'] . '</td>
-                <td class = "col-sm-1">' . $applicants['address'] . '</td>
-                <td class = "col-sm-1">' . $applicants['city'] . '</td>
-                <td class = "col-sm-1">' . $applicants['province'] . '</td>
-                <td class = "col-sm-1">' . $applicants['phone'] . '</td>
-                <td class = "col-sm-1">
-                    <a href = "signup.php?ID='.$applicants['applicantID'].'" title = " Edit this applicant">Edit</a>
+                <td class = "text-nowrap">' . $user['fname'].' '.$user['lname']. '</td>
+                <td class = "text-nowrap">' . $user['str'] . '</td>
+                <td class = "text-nowrap">' . $user['city'] . '</td>
+                <td class = "text-nowrap">' . $user['state'] . '</td>
+                <td class = "text-nowrap">' . $user['country'] . '</td>
+                <td class = "text-nowrap">' . $user['ph'] . '</td>
+                <td class = "text-nowrap">
+                    <a href = "signup.php?id='.$user['id'].'" title = " Edit this user">Edit</a>
                 </td>
-                <td class = "col-sm-1">
-                  <a href = "delete.php?applicantID='.$applicants['applicantID'].'"
+                <td class = "text-nowrap">
+                  <a href = "delete.php?id='.$user['id'].'"
                         onclick="return confirm(\' Are You Sure  want to delete this record ? \')"
-                        title = " Delete this applicant" >Delete</a>
+                        title = " Delete this users" >Delete</a>
                 </td>
             </tr>';
     }
@@ -56,7 +55,7 @@ try {
     $conn = null;
 } catch (exception $ex) {
     // send a mail to developer
-    mail('error@rdsconsulting.ca', 'view employee error', $ex);
+    // mail('error@rdsconsulting.ca', 'view employee error', $ex);
 
     // redirect user to error page
     header('Location:error.php');

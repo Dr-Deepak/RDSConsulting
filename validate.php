@@ -18,14 +18,15 @@ try {
     $recCount = $cmd->rowCount();
 
     if($recCount == 0){
-        header('location:login.php');
+        $_SESSION['error'] = 'no record found';
+        header('location:/error/404.php');
         
         //$result = "Invalid Username or password";
     }
     else {
         session_start();
         foreach($users as $user ){
-            $_SESSION['uname'] = $user['uname'];
+            $_SESSION['uname']       = $user['uname'];
             $_SESSION['firstname']   = $user['fname'];
             $_SESSION['lastname']    = $user['lname'];
             $_SESSION['position']    = $user['priv'];
@@ -36,10 +37,10 @@ try {
 
 
 }catch(Exception $db){
-
-    console.log($db );
+$_SESSION['error'] = "ERROR Messeges from DB".$db;
+    
   //  mail("errors@rdsconsulting.ca","Database connection error",$db);
-  //  header('location:error/error.php');
+   header('location:/error/404.php');
 }
 ob_flush();
 ?>
