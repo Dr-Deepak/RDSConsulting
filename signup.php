@@ -14,6 +14,7 @@
         $phone   = "";
         $hidden  = "hidden";
         $uname   = "";
+        $welcome ="Let's change your infomation! "; 
     }
     else
     {
@@ -36,6 +37,7 @@
             $priv    = $user['priv'];
             $hidden  = null;
             $uname   = $user['uname'];
+            $welcome ="Let's Sign up! "; 
             
         }
         $conn=null;
@@ -43,7 +45,7 @@
     require_once('layout/header.php');
 ?>
 <!-- <script src="js/auto-complete.js"></script> -->
-    <h1>Let's Sign up ! </h1>    
+    <h1><?php echo $welcome; ?></h1>    
     <form class ="justify-content-center" action="register.php" method="post">
         <input name='id' hidden  Value=<?php echo $id?> />
         <fieldset>

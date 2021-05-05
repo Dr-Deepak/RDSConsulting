@@ -21,36 +21,41 @@
 </head>
 <body>
   <header>
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-      <div class="container-fluid">      
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#myTogglerNav" aria-controls="#myTogglerNav" aria-lable="Toggle Navigation">
+      <span class= "navbar-toggler-icon"></span>
+    </button>
+
+    <div class="container-fluid">      
+      <div class="navbar navbar-expand-md bg-dark navbar-dark">     
         <a href="welcome.php" class="navbar-brand" title=" homepage">
             <i class ="fas fa-briefcase"></i> <?php echo $page_title;?>
         </a>
+        <section class="collapse navbar-collapse" id = "myTogglerNav">
+          <div class="navbar-nav">
+            <?php
+              if(session_status()!= PHP_SESSION_ACTIVE){
+                  session_start();
+              }
+              if(!empty($_SESSION['uname'])){
+                  if(strcmp($_SESSION['position'], 'admin')==0){
+                      echo '<a class = "nav-item nav-link text-uppercase" href = "users.php" title = users" >users </a>';
 
-        <div class="navbar-nav">
-          <?php
-            if(session_status()!= PHP_SESSION_ACTIVE){
-                session_start();
-            }
-            if(!empty($_SESSION['uname'])){
-                 if(strcmp($_SESSION['position'], 'admin')==0){
-                    echo '<a class = "nav-item nav-link text-uppercase" href = "users.php" title = users" >users </a>';
-
-                  }
-                  else{
-                    
-                  }
-                    echo' <a class = "nav-item nav-link text-uppercase" href = "logout.php" title = "LOGOUT" > Log Out</a >';
-                
-            }
-            else
-            {
-                 echo '<a class = "nav-item nav-link text-uppercase" href = "login.php" title = "LOG IN" > LOG IN </a>
-                       <a class = "nav-item nav-link text-uppercase" href = "signup.php" title = "SIGN UP" > SIGN UP </a> ';
-            }
-          ?>
-        </div>
+                    }
+                    else{
+                      
+                    }
+                      echo' <a class = "nav-item nav-link text-uppercase" href = "logout.php" title = "LOGOUT" > Log Out</a >';
+                  
+              }
+              else
+              {
+                  echo '<a class = "nav-item nav-link text-uppercase" href = "login.php" title = "LOG IN" > LOG IN </a>
+                        <a class = "nav-item nav-link text-uppercase" href = "signup.php" title = "SIGN UP" > SIGN UP </a> ';
+              }
+            ?>
+          </div>
+        </section>
       </div>
-    </nav>
+    </div>
 </header>
 <main class="container">
